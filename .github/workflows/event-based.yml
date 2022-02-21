@@ -22,7 +22,7 @@ jobs:
         build:
         - name: event tests
           install:
-          configure: --enable-debug --disable-shared --disable-threaded-resolver --enable-code-coverage --enable-werror --with-libssh2 --with-openssl
+          configure: --enable-debug --disable-shared --disable-threaded-resolver --enable-werror --with-libssh2 --with-openssl
           tflags: -n -e '!TLS-SRP'
 
     steps:
