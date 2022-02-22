@@ -25,10 +25,17 @@ find_path(WolfSSL_INCLUDE_DIR NAMES wolfssl/ssl.h)
 find_library(WolfSSL_LIBRARY NAMES wolfssl)
 mark_as_advanced(WolfSSL_INCLUDE_DIR WolfSSL_LIBRARY)
 
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(WolfSSL
-  REQUIRED_VARS WolfSSL_INCLUDE_DIR WolfSSL_LIBRARY
-  )
+# support wolfssl being next to curl
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../wolfssl/wolfssl/ssl.h)
+    set(WolfSSL_FOUND TRUE)
+    set(WolfSSL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../wolfssl/include)
+    set(WolfSSL_LIBRARY wolfssl)
+else()
+  include(FindPackageHandleStandardArgs)
+  find_package_handle_standard_args(WolfSSL
+    REQUIRED_VARS WolfSSL_INCLUDE_DIR WolfSSL_LIBRARY
+    )
+endif()
 
 if(WolfSSL_FOUND)
   set(WolfSSL_INCLUDE_DIRS ${WolfSSL_INCLUDE_DIR})
